@@ -85,12 +85,12 @@ for i in test.itertuples():
     test1.pop(0) # removing Index (unwanted)
     ans=test1.pop() # removing actual value
     py=1
-    for i in range(9):
+    for i in range(7):
         val = train[(train[atr[i]] == test1[i]) & (train.Survived == 1)].count().values.item(0)
         py = py * (val) / len(survived_yes)
         total_yes = py * P_yes
     pn=1
-    for i in range(9):
+    for i in range(7):
         val = train[(train[atr[i]] == test1[i]) & (train.Survived == 0)].count().values.item(0)
         pn = pn * (val) / len(survived_no)
         total_no = pn * P_no
