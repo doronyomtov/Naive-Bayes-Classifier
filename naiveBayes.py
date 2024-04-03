@@ -1,4 +1,3 @@
-import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 from sklearn.model_selection import train_test_split
 
@@ -6,9 +5,9 @@ import os
 for dirname, _, filenames in os.walk('/kaggle/input'):
     for filename in filenames:
         print(os.path.join(dirname, filename))
-
-df=pd.read_csv("../input/titanic-cleaned-data/train_clean.csv") 
-df_test=pd.read_csv("../input/titanic-cleaned-data/test_clean.csv")
+        
+df = pd.read_csv('train.csv')
+df_test = pd.read_csv('test.csv')
 
 df.info() # Print a concise summary of a DataFrame.
 df.head() # Return the first 5 rows.
@@ -25,8 +24,8 @@ df.describe() # Generate descriptive statistics.
 df.drop(["Cabin","Name","PassengerId","Ticket"],axis=1,inplace=True)
 df_test.drop(["Cabin","Name","PassengerId","Ticket"],axis=1,inplace=True)
 
-df=df[['Age', 'Embarked', 'Fare', 'Parch', 'Pclass', 'Sex', 'SibSp', 'Title', 'Family_Size','Survived']]
-df_test=df_test[['Age', 'Embarked', 'Fare', 'Parch', 'Pclass', 'Sex', 'SibSp', 'Title', 'Family_Size','Survived']]
+df = df[['Age', 'Embarked', 'Fare', 'Parch', 'Pclass', 'Sex', 'SibSp','Survived']]
+df_test = df_test[['Age', 'Embarked', 'Fare', 'Parch', 'Pclass', 'Sex', 'SibSp',]]
 
 # Age and fare are in float -> convert it into integer and then into categories.
 
@@ -94,12 +93,12 @@ for i in test.itertuples():
         val = train[(train[atr[i]] == test1[i]) & (train.Survived == 0)].count().values.item(0)
         pn = pn * (val) / len(survived_no)
         total_no = pn * P_no
-    if total_yes>total_no:
-        list1=[[ans,1]] #Survived
-        output_dataframe=output_dataframe.append(pd.DataFrame(list1,columns=['Actual','Predicted']),ignore_index=True)
+    if total_yes > total_no:
+        dataframe = pd.DataFrame([[ans, 1],],columns=['Actual', 'Predicted'])  # Survived
+        output_dataframe = pd.concat([output_dataframe,dataframe])
     else:
-        list0=[[ans,0]] #NotSurvived
-        output_dataframe=output_dataframe.append(pd.DataFrame(list0,columns=['Actual','Predicted']),ignore_index=True)
+        dataframe = pd.DataFrame([[ans, 0],],columns=['Actual', 'Predicted'])  # NotSurvived
+        output_dataframe = pd.concat([output_dataframe,dataframe])
 
 
 # Evaluation metrics
